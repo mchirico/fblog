@@ -1,10 +1,10 @@
 {
   "name": "@mchirico/fblog",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "private": false,
   "description": "A Firebase logger",
-  "main": "dist/firebase.ts.js",
-  "types": "dist/firebase.ts.d.ts",
+  "main": "lib/firebase.ts.js",
+  "types": "lib/firebase.ts.d.ts",
   "author": "Mike Chirico (https://mchirico.github.io/) <mchirico@gmail.com>",
   "license": "ISC",
   "repository": "https://github.com/mchirico/fblog.git",
@@ -20,6 +20,7 @@
     "lint": "eslint ./src --ext .ts,.tsx --fix &&  eslint ./test --ext .ts,.tsx --fix   ",
     "start": "node dist/firebase.js",
     "build": "ncc build src/firebase.ts",
+    "fbtest": "firebase emulators:exec  --project 'septapig' 'npm test'",
     "pub": "npm build && npm publish --access public"
   },
   "husky": {

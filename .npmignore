@@ -19,3 +19,5 @@ firebase-adminsdk.json
 .eslintrc.js
 .nyc_output/**
 firestore.rules
+firebase.json
+firestore.indexes.json
