@@ -21,6 +21,8 @@ const obs = fbLog.onSnapshot(
       }
     );
 
+// Eventually terminate the observable
+obs();
 ```
 
 
