@@ -17,8 +17,8 @@
     "test": "nyc --reporter=lcov mocha -r ts-node/register -t 30s 'test/*.spec.ts'",
     "format": "prettier --write **/*.ts",
     "lint": "eslint ./src --ext .ts,.tsx --fix &&  eslint ./test --ext .ts,.tsx --fix   ",
-    "start": "node dist/firebase.ts.js",
-    "build": "ncc build src/firebase.ts.ts",
+    "start": "node dist/firebase.js",
+    "build": "ncc build src/firebase.ts",
     "pub": "npm build && npm publish --access public"
   },
   "husky": {
