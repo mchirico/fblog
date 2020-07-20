@@ -10,3 +10,12 @@ tsconfig.json
 tslint.json
 .prettierrc
 *.md
+credentials/*
+firebase-adminsdk.json
+*.log
+.idea/**
+.github/**
+.firebaserc
+.eslintrc.js
+.nyc_output/**
+firestore.rules
