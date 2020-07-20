@@ -21,3 +21,4 @@ firebase-adminsdk.json
 firestore.rules
 firebase.json
 firestore.indexes.json
+docks/**
