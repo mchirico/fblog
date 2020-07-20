@@ -378,3 +378,39 @@ describe("Edge case remove ...", function () {
     obs();
   });
 });
+
+describe("Check Split ...", function () {
+  let db: any;
+  let fbLog: any;
+  let docStub: any;
+
+  before(async function () {
+    db = getDBadmin();
+    await clearFirestoreData({ projectId: MY_PROJECT_ID });
+  });
+
+  beforeEach(async function () {
+    docStub = sinon.stub(db, "doc").callsFake(fakeDoc);
+    fbLog = new FBLog(db);
+  });
+
+  afterEach(async function () {
+    await Promise.all(firebase.apps().map((app) => app.delete()));
+    docStub.restore();
+  });
+
+  it("should have even path", async function () {
+    const path = "snap";
+    const result = fbLog.addDocUUID(path);
+    console.log(result);
+    expect(result.split("/").length).to.equal(2);
+
+    const result2 = fbLog.addDocUUID("snap/1");
+    console.log(result2);
+    expect(result2.split("/").length).to.equal(2);
+
+    const result3 = fbLog.addDocUUID("/snap/1/2");
+    console.log(result3);
+    expect(result3.split("/").length).to.equal(5);
+  });
+});

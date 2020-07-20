@@ -1,5 +1,6 @@
 import admin from "firebase-admin";
 import { App } from "./firebaseAdmin";
+import { v1 as uuidv1 } from "uuid";
 
 import WriteResult = admin.firestore.WriteResult;
 import DocumentData = admin.firestore.DocumentData;
@@ -15,6 +16,7 @@ class FBLog {
   ) {}
 
   set(path: string, data: DocumentData): Promise<WriteResult> | Promise<void> {
+    path = this.addDocUUID(path);
     return this.db.doc(path).set(data);
   }
 
@@ -24,6 +26,19 @@ class FBLog {
     return this.db
       .doc(`${path}/timeStamp/${timeStamp.toISOString()}`)
       .set(data);
+  }
+
+  addDocUUID(path: string): string {
+    const pathArray = path.split("/");
+    let length = pathArray.length;
+    if (path[0] === "/") {
+      length = length + 1;
+    }
+
+    if (length % 2) {
+      return `${path}/${uuidv1()}`;
+    }
+    return path;
   }
 
   archive(path: string, data: any): void {
