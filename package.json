@@ -2,8 +2,8 @@
   "name": "fblog",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/firebase.ts.js",
+  "types": "dist/firebase.ts.d.ts",
   "author": "",
   "license": "ISC",
   "repository": "https://github.com/mchirico/fblog.git",
@@ -17,8 +17,8 @@
     "test": "nyc --reporter=lcov mocha -r ts-node/register -t 30s 'test/*.spec.ts'",
     "format": "prettier --write **/*.ts",
     "lint": "eslint ./src --ext .ts,.tsx --fix &&  eslint ./test --ext .ts,.tsx --fix   ",
-    "start": "node dist/index.js",
-    "build": "ncc build src/index.ts",
+    "start": "node dist/firebase.ts.js",
+    "build": "ncc build src/firebase.ts.ts",
     "pub": "npm build && npm publish --access public"
   },
   "husky": {

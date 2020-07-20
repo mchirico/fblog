@@ -11,7 +11,7 @@ import * as os from "os";
 
 class FBLog {
   constructor(
-    public db: admin.firestore.Firestore | firebase.firestore.Firestore
+    public db: admin.firestore.Firestore | firebase.firestore.Firestore = db
   ) {}
 
   set(path: string, data: DocumentData): Promise<WriteResult> | Promise<void> {
