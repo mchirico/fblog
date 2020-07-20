@@ -10,7 +10,10 @@ credentials/firebase-adminsdk.json
 ```
 
 ```
-const fbLog = new FBLog();
+import {FBLog, db} from "@mchirico/fblog";
+
+
+const fbLog = new FBLog(db);
 const obs = fbLog.onSnapshot(
       "fblog",
       "action",
@@ -29,7 +32,9 @@ obs();
 In another program, maybe on another system
 
 ```
-const fbLog = new FBLog();
+import {FBLog, db} from "@mchirico/fblog";
+
+const fbLog = new FBLog(db);
 fbLog.set("fblog",{desc: "description to log", action: "activate"})
 
 ```
