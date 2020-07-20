@@ -1,6 +1,6 @@
 {
   "name": "@mchirico/fblog",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": false,
   "description": "A Firebase logger",
   "main": "lib/firebase.ts.js",
@@ -19,7 +19,7 @@
     "format": "prettier --write **/*.ts",
     "lint": "eslint ./src --ext .ts,.tsx --fix &&  eslint ./test --ext .ts,.tsx --fix   ",
     "start": "node dist/firebase.js",
-    "build": "ncc build src/firebase.ts",
+    "build": "tsc",
     "fbtest": "firebase emulators:exec  --project 'septapig' 'npm test'",
     "pub": "npm build && npm publish --access public"
   },
