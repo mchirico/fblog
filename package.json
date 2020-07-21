@@ -1,6 +1,6 @@
 {
   "name": "@mchirico/fblog",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "private": false,
   "description": "A Firebase logger",
   "main": "lib/firebase.js",
