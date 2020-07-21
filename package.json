@@ -1,6 +1,6 @@
 {
   "name": "@mchirico/fblog",
-  "version": "1.0.16",
+  "version": "1.0.18",
   "private": false,
   "description": "A Firebase logger",
   "main": "lib/firebase.js",
@@ -9,7 +9,7 @@
   "license": "ISC",
   "repository": "https://github.com/mchirico/fblog.git",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/mchirico"
+    "registry": "https://registry.npmjs.org/"
   },
   "homepage": "https://github.com/mchirico/fblog",
   "bugs": "https://github.com/mchirico/fblog/issues",
