@@ -5,11 +5,13 @@ const serviceAccount = JSON.parse(
 );
 
 let adminApp: admin.app.App;
-export function App(): admin.app.App {
+export function App(
+  databaseURL = "https://septapig.firebaseio.com"
+): admin.app.App {
   if (!admin.apps.length) {
     const app = admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
-      databaseURL: "https://septapig.firebaseio.com",
+      databaseURL: databaseURL,
     });
     adminApp = app;
     return app;

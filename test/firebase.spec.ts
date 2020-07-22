@@ -1,7 +1,7 @@
 import "mocha";
 
 import * as firebase from "@firebase/testing";
-import { FBLog } from "../src/firebase";
+import { App, FBLog } from "../src/firebase";
 import * as admin from "firebase-admin";
 import { expect } from "chai";
 import * as sinon from "sinon";
@@ -61,26 +61,6 @@ describe("Firebase test ...", function () {
 
   // TODO: You need the emulator for this test
   //   firebase emulators:start --project septapig
-  it("log", async function () {
-    const path = "log/test";
-    const db = getDBadmin();
-
-    await db.doc(path).delete();
-    const fbLog = new FBLog(db);
-    await fbLog.log(path, { data: "works" });
-    const testQuery = db.doc(path);
-    const doc = await testQuery.get();
-
-    if (!doc.exists) {
-      console.log("No such document!");
-    } else {
-      console.log("Document data:", doc.data());
-      expect(doc.data()?.timeStamp).to.exist;
-    }
-    expect(doc.exists).to.exist;
-
-    await firebase.assertSucceeds(testQuery.get());
-  });
 
   it("Test snapshot ", async function () {
     const path = "/items/1";
@@ -128,6 +108,7 @@ describe("Firebase test ...", function () {
 
     if (!doc.exists) {
       console.log("No such document!");
+      throw new Error("No such document!");
     } else {
       console.log("Document data:", doc.data());
     }
@@ -176,6 +157,7 @@ describe("Firebase test ...", function () {
     const doc = await dataRef.get();
     if (!doc.exists) {
       console.log("No such document!");
+      throw new Error("No such document!");
     } else {
       console.log("Document data:", doc.data());
     }
@@ -197,13 +179,9 @@ describe("Fake tests ...", function () {
 
   it("should log", async function () {
     const path = "/items/1";
-
     const docStub = sinon.stub(db, "doc").callsFake(fakeDoc);
-
     const fbLog = new FBLog(db);
-
     await fbLog.log(path, { data: "example" });
-
     const epath = lastPath;
 
     const testQuery = db.doc(epath);
@@ -213,6 +191,7 @@ describe("Fake tests ...", function () {
     const doc = await dataRef.get();
     if (!doc.exists) {
       console.log("No such document!");
+      throw new Error("No such document!");
     } else {
       console.log("Document data:", doc.data());
     }
@@ -249,6 +228,7 @@ describe("Fake tests ...", function () {
     const doc = await firebase.assertSucceeds(dataRef.get());
     if (!doc.exists) {
       console.log("No such document!");
+      throw new Error("No such document!");
     } else {
       console.log("Document data:", doc.data());
     }
@@ -412,5 +392,46 @@ describe("Check Split ...", function () {
     const result3 = fbLog.addDocUUID("/snap/1/2");
     console.log(result3);
     expect(result3.split("/").length).to.equal(5);
+  });
+});
+
+describe("Check healthz ...", function () {
+  let db: any;
+  let fbLog: any;
+  let docStub: any;
+
+  before(async function () {
+    db = getDBadmin();
+    //await clearFirestoreData({ projectId: MY_PROJECT_ID });
+  });
+
+  beforeEach(async function () {
+    docStub = sinon.stub(db, "doc").callsFake(fakeDoc);
+    fbLog = new FBLog(db);
+  });
+
+  afterEach(async function () {
+    await Promise.all(firebase.apps().map((app) => app.delete()));
+    docStub.restore();
+  });
+
+  it("should have even path", async function () {
+    const path = "healthzTest";
+    const result = fbLog.healthz(path, { data: "stuff" });
+    console.log(result);
+
+    const citiesRef = db.collection("test");
+    const snapshot = await citiesRef.where("data", "==", "stuff").get();
+    if (snapshot.empty) {
+      console.log("No matching documents.");
+      return;
+    }
+    snapshot.forEach((doc: any) => {
+      console.log(doc.id, "=>", doc.data()?.timeStamp);
+      const d = new Date();
+      console.log(d.getTime() / 1000);
+    });
+
+    // expect(result.split("/").length).to.equal(2);
   });
 });

@@ -5,12 +5,13 @@ import { v1 as uuidv1 } from "uuid";
 import WriteResult = admin.firestore.WriteResult;
 import DocumentData = admin.firestore.DocumentData;
 import * as firebase from "@firebase/testing";
-const app = App();
-const db = app.firestore();
+
+const db = App().firestore();
 
 import * as os from "os";
 
 class FBLog {
+  healthpath = "";
   constructor(
     public db: admin.firestore.Firestore | firebase.firestore.Firestore = db
   ) {}
@@ -39,6 +40,24 @@ class FBLog {
       return `${path}/${uuidv1()}`;
     }
     return path;
+  }
+
+  healthz(path: string, data: any): void | string {
+    const d = new Date();
+    data.hostname = os.hostname();
+    data.loadavg = os.loadavg();
+    data.freemem = os.freemem();
+    data.interfaces = os.networkInterfaces();
+    data.timeStamp = d;
+    this.healthpath = `fblog/u/healthz/${path}/0`;
+    try {
+      this.db.doc(this.healthpath).set(data);
+      return this.healthpath;
+    } catch (error) {
+      this.db.doc(`error/fblog/archive/${d.toISOString()}`).set({
+        error: error.message,
+      });
+    }
   }
 
   archive(path: string, data: any): void {
@@ -88,4 +107,4 @@ class FBLog {
   }
 }
 
-export { WriteResult, db, FBLog };
+export { WriteResult, App, FBLog };

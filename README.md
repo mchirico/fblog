@@ -10,9 +10,10 @@ credentials/firebase-adminsdk.json
 ```
 
 ```
-import {FBLog, db} from "@mchirico/fblog";
+import {FBLog, App} from "@mchirico/fblog";
 
-
+const databaseURL = "https://yourproject.firebaseio.com"
+const db = App(databaseURL).firestore()
 const fbLog = new FBLog(db);
 const obs = fbLog.onSnapshot(
       "fblog",
@@ -32,8 +33,10 @@ obs();
 In another program, maybe on another system
 
 ```
-import {FBLog, db} from "@mchirico/fblog";
+import {FBLog, App} from "@mchirico/fblog";
 
+const databaseURL = "https://yourproject.firebaseio.com"
+const db = App(databaseURL).firestore()
 const fbLog = new FBLog(db);
 fbLog.set("fblog",{desc: "description to log", action: "activate"})
 
