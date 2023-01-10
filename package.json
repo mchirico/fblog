@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@types/sinon": "^9.0.4",
-    "firebase-admin": "^9.0.0",
+    "firebase-admin": "^11.4.1",
     "rxjs": "^6.6.0",
     "uuid": "^8.2.0"
   }
